@@ -7,12 +7,14 @@ const apiClient = axios.create({
 });
 
 export const getAuthToken = (): string => {
-    if (typeof window !== "undefined") {
-        return window.localStorage.getItem("accessToken") ?? "";
+    if (typeof document !== "undefined") {
+        return document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("accessToken="))
+            ?.split("=")[1] ?? "";
     }
     return "";
 };
-
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const isAuthRequest =
         config.url &&

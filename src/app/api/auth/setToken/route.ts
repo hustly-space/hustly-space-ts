@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
         const response = NextResponse.json({ message: "Token set successfully" });
         response.cookies.set("accessToken", token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
             path: "/",
